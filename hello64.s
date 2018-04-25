@@ -3,7 +3,7 @@
     ;; Link with: ld -m elf_i386 -o hello hello.o
     ;; Run with: ./hello
 
-    ;; sys/syscall.h
+    ;; sys/unistd_64.h
 %define     SYS_write	1
 %define     SYS_exit	60
 
