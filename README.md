@@ -5,11 +5,31 @@ reboot my assembly language skills, this time in X86 and X86_64.  ("This
 time" because the last time I wrote assembly language I was writing for
 the Motorola 68000 line.)
 
-The tutorial I based this off of is at http://asmtutor.com/
+The tutorial I based this off of is at http://asmtutor.com/ The source
+code for the original tutorial, as well as the website, is by GitHub
+contributor Daniel Givney at
+[Assembly Tutorials](https://github.com/DGivney/assemblytutorials).
+
+I'll see if I can't scrape together some other, more esoteric examples
+in the future.
 
 ## Getting Started
 
 There's a Makefile.  It has a nice help¹.
+
+You will need to be running Linux on an Intel platform.  These lessons
+do not apply to ARM chips like those on the Raspberry Pi (although it
+would be super cool if they did!).
+
+You will need a copy of [nasm](https://www.nasm.us/), the Netwide
+Assembler, the most popular assembler currently in widespread use.
+There are other assemblers, such as GAS (Used by the GNU GCC project),
+MASM (from Microsoft), and so forth, but NASM is popular,
+well-understood, and well-supported.  You will also need a linker; the
+Makefile assumes you have the linker suppled with GNU Binutils.  On
+Ubuntu-based platforms this comes with the `build-essentials` package.
+If you have a different distribution, consult your archive.  If you can
+compile a **C** program, you're fine.
 
 ## Lesson 2
 
@@ -114,10 +134,33 @@ other combination.
 
 More to come... I hope...
 
+## Authors
+
+Yours truly!  Elf M. Sternberg <elf.sternberg@gmail.com>.
+
+## License
+
+Daniel Givney does not specify a license for his code, but it is his
+copyright.  I did type in, modify, and write these examples on my own (I
+find that I only *learn* things in my brain if they go through my
+fingers, so I rarely cut-and-paste anything), and unless Daniel has a
+complaint, I'm tagging my code with the MIT License.  See the
+`LICENSE.txt` file for the full details.
+
+## Acknowledgements
+
+* Daniel Givney, of course.
+* [The NASM Documentation](https://www.nasm.us/doc/) is very well-written!
+* [Nayuki](https://github.com/nayuki) has added much to my understanding
+* [David Evans](http://www.cs.virginia.edu/~evans/cs216/guides/x86.html)
+helped with my understanding of syntax and register use.
+* [Ray Toal](http://cs.lmu.edu/~ray/notes/nasmtutorial/)'s notes on NASM
+are also useful.
+
 ---
 Footnotes!
 
 ¹ I firmly believe that no command, typed blindy, should modify the
-contents of your hard drive.  Make takes target arguments, and you
+contents of your hard drive.  `Make` takes target arguments, and you
 should specify the targets you want built.  So `make` by itself only
 issues help.
