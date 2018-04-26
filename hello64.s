@@ -1,6 +1,6 @@
     ;; Hello World Program #1
-    ;; Compile with: nasm -f elf32 hello.s
-    ;; Link with: ld -m elf_i386 -o hello hello.o
+    ;; Compile with: nasm -f elf64 hello.s
+    ;; Link with: ld -o hello hello.o
     ;; Run with: ./hello
 
     ;; sys/unistd_64.h
@@ -12,12 +12,13 @@
 
 section .data
     msg     db  "Hello You Beautiful Human", 0Ah
+    len     equ $-msg           ; NASM-supplied macro
 
 section .text    
     global _start
 
 _start:
-    mov     rdx, 26d            ; Length of the message
+    mov     rdx, len            ; Length of the message
     mov     rsi, msg            ; Address of the message
     mov     rdi, STDOUT         ; using STDOUT (see definition above)
     mov     rax, SYS_write      ; Using WRITE in 32-bit mode?
