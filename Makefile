@@ -23,5 +23,13 @@ counted-hello64: counted-hello64.s    ## Build the 32 bit version of Project 3
 	nasm -f elf64 counted-hello64.s
 	ld -o counted-hello64 counted-hello64.o
 
+subroutine-hello32: subroutine-hello32.s    ## Build the 32 bit version of Project 3
+	nasm -f elf subroutine-hello32.s
+	ld -m elf_i386 -o subroutine-hello32 subroutine-hello32.o
+
+subroutine-hello64: subroutine-hello64.s    ## Build the 32 bit version of Project 3
+	nasm -f elf64 subroutine-hello64.s
+	ld -o subroutine-hello64 subroutine-hello64.o
+
 clean:                ## Delete all built and intermediate features
 	rm -f hello32 hello64 counted-hello32 counted-hello64 *.o
