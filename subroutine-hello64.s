@@ -55,7 +55,6 @@ printit:
     mov     rax, SYS_write      ; Using WRITE in 32-bit mode?
     syscall
     pop     rax
-    pop     rdx
     pop     rdi
 
     ;; Since this terminates the program, I'm not worried about

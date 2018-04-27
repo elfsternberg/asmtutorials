@@ -17,45 +17,36 @@ section .text
     global _start
 
 _start:
-    mov     eax, msg            ; Put the address of our message into eax.
+    mov     ecx, msg            ; Put the address of our message into eax.
     call    strlen              ; call the function strlen.  We're using EAX as our argument.
-
-    mov     edx, eax            ; We know printit wants these two
-    mov     eax, msg
     call    printit
     call    exit
 
 strlen:
-    push    ebx                 ; Push ebx onto the stack, since the calling scope
                                 ; will probably want its state restored correctly, right?
-    mov     ebx, eax
+    mov     edx, ecx
 
 strlen_next:
-    cmp     byte [eax], 0
+    cmp     byte [edx], 0
     jz      strlen_done
-    inc     eax
+    inc     edx
     jmp     strlen_next
 
 strlen_done:
-    sub     eax, ebx            ; Straight from the counted-hello file
-    pop     ebx                 ; restore EBX for the calling scope, which is
-                                ; expecting its answer in eax
+    sub     edx, ecx            ; Straight from the counted-hello file
     ret
 
     ;; Takes EAX as the address of the message and EDX as the
     ;; length, and prints them.  Restores all used registers
-    ;; when finished.
+    ;; when finished.  EDX contains the count.
 printit:
-    push    eax
     push    ebx
-    push    ecx
-    mov     ecx, eax
+    push    eax
     mov     ebx, STDOUT
     mov     eax, SYS_write
     int     80h
-    pop     ecx
-    pop     ebx
     pop     eax
+    pop     ebx
     ret
 
     ;; Since this terminates the program, I'm not worried about
