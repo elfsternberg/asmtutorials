@@ -132,6 +132,31 @@ memory locations directly.  `cmp` works with two registers, or a
 register and a memory location, or a register and a constant, but no
 other combination.
 
+## Lesson 4: Subroutines
+
+Lesson four introduces two new pairs of instructions: `push` & `pop`,
+and `call` and `ret`.  The first two push values onto the stack and
+then pop them off. The latter two call a subroutine and then return
+from it; `call` pushes the address of the next instruction onto the
+stack, and `ret` pops it off and sets the IPR (Instruction Pointer
+Register) to the calling routine.
+
+In these examples, I think I've engaged in what is known as *callee
+cleanup*, which means that the subroutine has the responsibility for
+restoring the registers after using them.  Then again, I may be
+hopelessly confused.  Hopefully, future lessons will clear up the
+`cdecl()` and other assembly conventions.
+
+As is clear in
+[the commit](https://github.com/elfsternberg/asmtutorials/commit/89b58186fbc54508891c0077cc3e32b3fed8d7cb)
+and in the comments itself, I've hopelessly abused convention by storing
+the results in the EDX and RDX registers, rather than EAX as is the
+convention.  On the one hand this is definitely *unstylish ASM*, on the
+other hand it's something one can do in hand-written ASM, saving exactly
+one cycle (register copies are *cheap*, people) on my computer that
+(checks `lshw`) executes approximately 2,870,000 instructions per
+**second**.
+
 More to come... I hope...
 
 ## Authors
