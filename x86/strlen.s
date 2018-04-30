@@ -10,11 +10,12 @@
     ;; unistd.h
 %define STDOUT		1
 
+global _start
+
 section .data
     msg     db  "Hello You Beautiful Human, You're Looking Fine Today!", 0Ah, 00h
     
 section .text    
-    global _start
 
 _start:
     mov     ebx, msg            ; Move the address of the message into ebx
@@ -28,16 +29,19 @@ nextchar:
     ;; sub does.  cmp sets flags; does sub?  This is why 'jz' works,
     ;; because if they're equal the result of subtraction is zero.
     jz      counted        ; Jump if the zero flag set
-    inc     eax
-    jmp     nextchar
+    inc     eax            ; Increment the counter
+    jmp     nextchar       ; Jump to the beginning of the loop
 
 counted:
-    sub     eax, ebx            ; Subtract the end from the start, and the result goes into the start
+    sub     eax, ebx            ; Subtract the end from the start, and
+                                ; the result goes into the start
 
-    mov     edx, eax            ; syswrite needs that register for something else! Man, picking registers is hard.
+    mov     edx, eax            ; syswrite needs that register for something
+                                ; else! Man, picking registers is hard.
+
     mov     ecx, msg            ; Address of the message (not the content)
     mov     ebx, STDOUT         ; using STDOUT (see definition above)
-    mov     eax, SYS_write      ; Using WRITE in 32-bit mode?
+    mov     eax, SYS_write      ; Using WRITE in 32-bit mode.
     int     80h                 ; Interrupt target. The 'h' means 'hexidecimal'
 
     mov     ebx, 0

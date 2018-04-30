@@ -23,6 +23,9 @@ strlen: strlen.o  ## Build Lesson 2: Determine length programmatically
 subroutines: subroutines.o  ## Build Lesson 3: Separate strlen() and puts() into subroutine.
 	$(LD) -m $(LINK_32) -o $@ $<
 
+includes: includes.o  ## Build Lesson 4: Separate strlen() and puts() into their own files.
+	$(LD) -m $(LINK_32) -o $@ $<
+
 help: run-help   ## Print this helpful message (default)
 
 clean:

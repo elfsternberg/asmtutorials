@@ -23,7 +23,6 @@ _start:
     call    exit
 
 strlen:
-                                ; will probably want its state restored correctly, right?
     mov     edx, ecx
 
 strlen_next:
@@ -33,7 +32,7 @@ strlen_next:
     jmp     strlen_next
 
 strlen_done:
-    sub     edx, ecx            ; Straight from the counted-hello file
+    sub     edx, ecx            ; Straight from the strlen file
     ret
 
     ;; Takes EAX as the address of the message and EDX as the

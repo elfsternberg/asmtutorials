@@ -2,9 +2,7 @@
 *~
 \#*
 .\#*
-hello32
-hello64
-counted-hello32
-counted-hello64
-subroutine-hello32
-subroutine-hello64
+hello
+strlen
+subroutines
+includes
