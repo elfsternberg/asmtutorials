@@ -9,27 +9,38 @@ LINK_64=elf_x86_64
 
 default: help
 
-all: hello strlen subroutines  ## Build everything at once
+PROGRAMS=hello strlen subroutines includes argv
 
-%.o: %.s
+all: $(PROGRAMS)  ## Build everything at once
+
+%.o: %.s functions.asm
 	$(NASM) -f $(COMPILE_64) $<
+
+# Lesson 1 was skipped because it was just Lesson 2 without a proper
+# exit handler... and who does that?
 
 hello: hello.o   ## Build Lesson 2: Print string with known length, exit cleanly
 	$(LD) -m $(LINK_64) -o $@ $<
 
-strlen: strlen.o  ## Build Lesson 2: Determine length programmatically
+strlen: strlen.o  ## Build Lesson 3: Determine length programmatically
 	$(LD) -m $(LINK_64) -o $@ $<
 
-subroutines: subroutines.o  ## Build Lesson 3: Separate strlen() and puts() into subroutine.
+subroutines: subroutines.o  ## Build Lesson 4: Separate strlen() and puts() into subroutine.
 	$(LD) -m $(LINK_64) -o $@ $<
 
-includes: includes.o  ## Build Lesson 4: Separate strlen() and puts() into their own files.
+includes: includes.o  ## Build Lesson 5: Separate strlen() and puts() into their own files.
+	$(LD) -m $(LINK_64) -o $@ $<
+
+# Lesson 6 is wrapped in Lesson 7: using null-terminated strings, but
+# lesson 7 then adds a line feed, so the jump isn't too big.
+
+argv: argv.o  ## Build Lesson 7 and 8: Line feeds and command line arguments
 	$(LD) -m $(LINK_64) -o $@ $<
 
 help: run-help   ## Print this helpful message (default)
 
 clean:
-	rm -f hello strlen subroutines *.o
+	rm -f $(PROGRAMS) *.o
 
 include ../makefiles/help.make
 

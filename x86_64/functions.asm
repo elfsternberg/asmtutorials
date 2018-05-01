@@ -9,6 +9,12 @@
     ;; unistd.h
 %define STDOUT		1
 
+    ;; A single null-terminated line feed.
+section .data
+    _lf db 0ah, 00h
+
+section .text
+
     ;; strlen() function.  Takes rdx as an argument - the pointer to
     ;; the initial string.  Returns rdx as the result - the length of
     ;; the string.
@@ -32,6 +38,7 @@ strlen_done:
     ;; its only argument - the pointer to the beginning of the string.
 
 puts:
+    push    rcx                 ; syscall uses RCX itself
     push    rdx                 ; RDX (data) is used as the length of the message
     push    rax                 ; RAX is the instruction to WRITE
     push    rdi                 ; RDI (destination) is used as an instruction to WRITE
@@ -54,6 +61,15 @@ puts:
     pop     rdi
     pop     rax
     pop     rdx
+    pop     rcx
+    ret
+
+putslf:
+    call    puts                ; Print the string
+    push    rsi                 ; Preserve this register
+    mov     rsi, _lf
+    call    puts
+    pop     rsi
     ret
 
     ;; exit().  Straight from the original.

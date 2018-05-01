@@ -157,7 +157,51 @@ one cycle (register copies are *cheap*, people) on my computer that
 (checks `lshw`) executes approximately 2,870,000 instructions per
 **second**.
 
-More to come... I hope...
+## Lesson 5: Includes
+
+Lesson 5 takes the functions we wrote in Lesson 4 and moves them into
+their own file, so that they can be called multiple time.  This means
+that the "register abuse" I engaged in in Lesson 4 has to be backed out;
+I have to be "good" and use the registers as recommended by the
+textbooks, because now they'll have multiple users and the conventions
+must be honored in that case.
+
+## Lesson 7 & 8: Print-with-linefeed and Argv
+
+Lesson 6 is virtually indistinguishable from Lessons 5 and 7; it's a
+tiny jump to using null instead of LF as our terminator, and I was
+already doing that.  Lesson 7 creates a wrapper around `puts()` that
+automatically appends a line-feed to the end of your null-terminated
+string.
+
+This leads into lesson 8, in which the environment provides a new chunk
+of memory containing the strings with which the program was initialized,
+and pointers to those strings are placed on the stack.  The first value
+on the stack is the number of pointers.
+
+With the "add a line feed" wrapper, the original text has you putting
+your line-feed string data into the stack, but I cheaped out and made my
+line-feed a two-byte (LF + NULL) constant and referred to it by address
+instead.
+
+One thing I did learn here?  When I ported it to X86_64, it broke
+badly.  It turns out that `syscall`, unlike `int 80h`, clobbers the
+counter register `rcx`.  And since that's what we were using in the
+32-bit version as our argv counter, I preserved that semantic in the
+64-bit version, which also means I had to modify `putslf()` to push
+`rcx` onto the stack and pop it off afterward.
+
+### Sidebar: A bug!
+
+Early on in Lesson 4, I spotted and fixed a bug where I had one too many
+`pops` off the stack (see
+[commit 89b58186](https://github.com/elfsternberg/asmtutorials/commit/89b58186fbc54508891c0077cc3e32b3fed8d7cb#diff-89abeb42c81885d8d2e202657820501bL58),
+but what perplexed me is how the system didn't crash with a stack
+underflow.  Now I know why: the stack had two values on it already: the
+counter, and the pointer to the program name, which is always `argv[0]`.
+Kinda cool to realize that now.
+
+More to come... maybe
 
 ## Authors
 

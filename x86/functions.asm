@@ -9,10 +9,16 @@
     ;; unistd.h
 %define STDOUT		1
 
+    ;; A single null-terminated line feed.
+section .data
+    _lf db 0ah, 00h
+
+section .text
+
     ;; strlen() function.  Takes eax as an argument - the pointer to
     ;; the initial string.  Returns eax as the result - the length of
     ;; the string.
-
+    
 strlen:
     push    ebx                 ; We'll be borrowing this register, so we put its
                                 ; current value on the stack.
@@ -57,6 +63,14 @@ puts:
     pop     ebx
     pop     ecx
     pop     edx
+    ret
+
+putslf:
+    call    puts                ; Print the string
+    push    eax                 ; Preserve this register
+    mov     eax, _lf
+    call    puts
+    pop     eax
     ret
 
     ;; exit().  Straight from the original.
