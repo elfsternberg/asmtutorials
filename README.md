@@ -195,7 +195,7 @@ counter register `rcx`.  And since that's what we were using in the
 
 Early on in Lesson 4, I spotted and fixed a bug where I had one too many
 `pops` off the stack (see
-[commit 89b58186](https://github.com/elfsternberg/asmtutorials/commit/89b58186fbc54508891c0077cc3e32b3fed8d7cb#diff-89abeb42c81885d8d2e202657820501bL58),
+[commit 89b58186](https://github.com/elfsternberg/asmtutorials/commit/89b58186fbc54508891c0077cc3e32b3fed8d7cb#diff-89abeb42c81885d8d2e202657820501bL58)),
 but what perplexed me is how the system didn't crash with a stack
 underflow.  Now I know why: the stack had two values on it already: the
 counter, and the pointer to the program name, which is always `argv[0]`.
