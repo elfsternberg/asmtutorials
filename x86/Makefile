@@ -37,6 +37,9 @@ includes: includes.o ## Build Lesson 5: Separate strlen() and puts() into their 
 argv: argv.o  ## Build Lesson 7 and 8: Line feeds and command line arguments
 	$(LD) -m $(LINK_32) -o $@ $<
 
+stdin: stdin.o  ## Build Lesson 9: Reading from stdin
+	$(LD) -m $(LINK_32) -o $@ $<
+
 help: run-help   ## Print this helpful message (default)
 
 clean:
